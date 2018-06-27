@@ -2,12 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path"
 	"runtime"
-	"strconv"
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
