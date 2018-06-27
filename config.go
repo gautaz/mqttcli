@@ -18,8 +18,7 @@ import (
 const DefaultConfigFile = ".mqttcli.cfg" // Under HOME
 
 type Config struct {
-	Host     string `json:"host"`
-	Port     int    `json:"port"`
+  Broker   string `json:"broker"`
 	UserName string `json:"username"`
 	Password string `json:"password"`
 
@@ -33,16 +32,8 @@ func (c *Config) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
-	if c.Host, err = js.Get("host").String(); err != nil {
-		c.Host = ""
-	}
-	// Port can be string either int
-	if c.Port, err = js.Get("port").Int(); err != nil {
-		p, err := js.Get("port").String()
-		c.Port, err = strconv.Atoi(p)
-		if err != nil {
-			c.Port = 0
-		}
+	if c.Broker, err = js.Get("broker").String(); err != nil {
+		c.Broker = ""
 	}
 	if c.UserName, err = js.Get("username").String(); err != nil {
 		c.UserName = ""
@@ -116,17 +107,9 @@ func getSettingsFromFile(p string, opts *MQTT.ClientOptions) error {
 		opts.SetTLSConfig(tlsConfig)
 	}
 
-	if ret.Host != "" {
-		if ret.Port == 0 {
-			ret.Port = 1883
-		}
-		scheme := "tcp"
-		if ret.Port == 8883 {
-			scheme = "ssl"
-		}
-		brokerUri := fmt.Sprintf("%s://%s:%d", scheme, ret.Host, ret.Port)
-		log.Infof("Broker URI: %s", brokerUri)
-		opts.AddBroker(brokerUri)
+	if ret.Broker != "" {
+		log.Infof("Broker URI: %s", ret.Broker)
+		opts.AddBroker(ret.Broker)
 	}
 
 	if ret.UserName != "" {

@@ -8,7 +8,7 @@ pubsub command which is suite for the shell script pipelining.
 Install
 ==============
 
-Download from here. Please choose your artitecture. (and chmod ugo+x if needed)
+Download from here. Please choose your architecture. (and chmod ugo+x if needed)
 
 https://drone.io/github.com/shirou/mqttcli/files
 
@@ -25,16 +25,15 @@ Usage
 common
 ----------
 
-You can set host, port, username and password on the Environment variables.
+You can set the MQTT broker URI, the username and the password through environment variables.
 
 ::
 
-    export MQTT_HOST="localhost"
-    export MQTT_PORT="1883"
+    export MQTT_BROKER="wss://mqtt.somewhere.io:9443"
     export MQTT_USERNAME="user"
     export MQTT_PASSWORD="blahblah"
 
-or using a config file. You can specify a config file by ``--conf`` option. or automatically load from ``~/.mqttcli.cfg``.
+or by using a config file. You can specify a config file with the ``--conf`` option. or automatically load from ``~/.mqttcli.cfg``.
 
 ::
 
@@ -45,8 +44,7 @@ example:
 ::
 
    {
-     "host": "localhost",
-     "port": 1883,
+     "broker": "wss://mqtt.somewhere.io:9443",
      "username": "user",
      "password": "blahblah"
    }
@@ -56,8 +54,7 @@ If you use AWS IoT, you can use these JSON as mqttcli config file, such as
 ::
 
    {
-     "host": "A3HVHEAALED.iot.ap-northeast-1.amazonaws.com",
-     "port": 8883,
+     "broker": "wss://A3HVHEAALED.iot.ap-northeast-1.amazonaws.com:8883",
      "clientId": "something",
      "thingName": "something",
      "caCert": "path/to/root-CA.crt",

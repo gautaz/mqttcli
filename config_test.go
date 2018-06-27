@@ -8,27 +8,21 @@ import (
 func Test_ConfigUnmarshalJSON(t *testing.T) {
 	c := Config{}
 
-	j := `{"host": "h", "port": 1883}`
+	j := `{"broker": "URI"}`
 	err := json.Unmarshal([]byte(j), &c)
 	if err != nil {
 		t.Error(err)
 	}
-	if c.Port != 1883 {
-		t.Error("port(int) is not correctly read")
-	}
-	if c.Host != "h" || c.UserName != "" || c.Password != "" {
+	if c.Broker != "URI" || c.UserName != "" || c.Password != "" {
 		t.Error("parse failed")
 	}
 
-	j = `{"host": "h", "port": "1883", "username": "u"}`
+	j = `{"broker": "URI", "username": "u"}`
 	err = json.Unmarshal([]byte(j), &c)
 	if err != nil {
 		t.Error(err)
 	}
-	if c.Port != 1883 {
-		t.Error("port(string) is not correctly read")
-	}
-	if c.Host != "h" || c.UserName != "u" || c.Password != "" {
+	if c.Broker != "URI" || c.UserName != "u" || c.Password != "" {
 		t.Error("parse failed with username set")
 	}
 }

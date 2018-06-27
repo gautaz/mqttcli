@@ -108,22 +108,17 @@ func main() {
 
 	commonFlags := []cli.Flag{
 		cli.StringFlag{
-			Name:   "host",
-			Value:  "",
-			Usage:  "mqtt host to connect to. Defaults to localhost",
-			EnvVar: "MQTT_HOST"},
-		cli.IntFlag{
-			Name:   "p, port",
-			Value:  1883,
-			Usage:  "network port to connect to. Defaults to 1883",
-			EnvVar: "MQTT_PORT"},
+			Name:   "b,broker",
+      Value:  "",
+      Usage:  "URI of the mqtt broker to connect to. Defaults to tcp://localhost:1883",
+			EnvVar: "MQTT_BROKER"},
 		cli.StringFlag{
 			Name:   "u,user",
 			Value:  "",
 			Usage:  "provide a username",
 			EnvVar: "MQTT_USERNAME"},
 		cli.StringFlag{
-			Name:   "P,password",
+			Name:   "p,password",
 			Value:  "",
 			Usage:  "provide a password",
 			EnvVar: "MQTT_PASSWORD"},

@@ -103,10 +103,9 @@ func getRandomClientId() string {
 func NewOption(c *cli.Context) (*MQTT.ClientOptions, error) {
 	opts := MQTT.NewClientOptions()
 
-	host := c.String("host")
-	port := c.Int("p")
+  broker := c.String("broker")
 
-	if host == "" {
+	if broker == "" {
 		err := getSettingsFromFile(c.String("conf"), opts)
 		if err != nil {
 			return nil, err
@@ -119,7 +118,6 @@ func NewOption(c *cli.Context) (*MQTT.ClientOptions, error) {
 	}
 	opts.SetClientID(clientId)
 
-	scheme := "tcp"
 	cafile := c.String("cafile")
 	key := c.String("key")
 	cert := c.String("cert")
@@ -130,23 +128,20 @@ func NewOption(c *cli.Context) (*MQTT.ClientOptions, error) {
 	}
 	if ok {
 		opts.SetTLSConfig(tlsConfig)
-		scheme = "ssl"
 	}
 
 	user := c.String("u")
 	if user != "" {
 		opts.SetUsername(user)
 	}
-	password := c.String("P")
+	password := c.String("p")
 	if password != "" {
 		opts.SetPassword(password)
 	}
 
-	if host != "" {
-		brokerUri := fmt.Sprintf("%s://%s:%d", scheme, host, port)
-		log.Infof("Broker URI: %s", brokerUri)
-
-		opts.AddBroker(brokerUri)
+	if broker != "" {
+		log.Infof("Broker URI: %s", broker)
+		opts.AddBroker(broker)
 	}
 
 	opts.SetAutoReconnect(true)
